@@ -8,6 +8,8 @@
 #define PROGRESS_BAR_WIDTH 100
 #define PROGRESS_BAR_HEIGHT 12
 #define MAX_DELTA 1500
+#define BASELINE_PULSE_WIDTH 1500
+#define NORMAL_PULSE_WIDTH 2560
 
 typedef enum {
     AlertModeSoundVibro,
@@ -21,7 +23,6 @@ typedef struct {
     uint16_t average_index;
     uint16_t baseline_value;
     uint16_t current_value;
-    bool calibrated;
     bool running;
     Gui* gui;
     NotificationApp* notification;
@@ -37,10 +38,10 @@ typedef struct {
 
 static void moving_average_init(MetalDetectorApp* app) {
     for(int i = 0; i < MOVING_AVERAGE_SIZE; i++) {
-        app->moving_average[i] = 2560;
+        app->moving_average[i] = NORMAL_PULSE_WIDTH;
     }
     app->average_index = 0;
-    app->current_value = 2560;
+    app->current_value = NORMAL_PULSE_WIDTH;
 }
 
 static uint16_t moving_average_update(MetalDetectorApp* app, uint16_t value) {
@@ -128,8 +129,8 @@ static void draw_callback(Canvas* canvas, void* context) {
     canvas_draw_str(canvas, 2, 28, buffer);
     
     int16_t delta = 0;
-    if (app->current_value < 1500) {
-        delta = 1500 - app->current_value;
+    if (app->current_value < BASELINE_PULSE_WIDTH) {
+        delta = BASELINE_PULSE_WIDTH - app->current_value;
     }
 
     // Fill the bar over the full range (0 to MAX_DELTA)
@@ -230,8 +231,8 @@ static int32_t sensor_worker_thread(void* context) {
         app->current_value = moving_average_update(app, reg_val);
         
         int16_t delta = 0;
-        if (app->current_value < 1500) {
-            delta = 1500 - app->current_value;
+        if (app->current_value < BASELINE_PULSE_WIDTH) {
+            delta = BASELINE_PULSE_WIDTH - app->current_value;
         }
         trigger_feedback(app, delta);
         
@@ -260,7 +261,6 @@ int32_t metal_detector_app(void* p) {
     
     memset(app, 0, sizeof(MetalDetectorApp));
     app->running = true;
-    app->calibrated = false;
     app->sensitivity = 750;
     
     // Initialize moving average
